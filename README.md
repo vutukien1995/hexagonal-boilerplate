@@ -56,7 +56,7 @@ This project follows **Hexagonal Architecture**, ensuring separation of concerns
 ### ✅  Standardized Error Handling
 - Each error has a unique error code (100, 101, 102, etc.), making it easier to debug and follow.
 - API clients (frontend, mobile apps, other services) can rely on error codes instead of parsing text.
-- Example log output:
+- Example:
   ```
   product.invalid.status=100-is invalid
   product.duplicated=101-is duplicated
