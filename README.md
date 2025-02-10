@@ -22,7 +22,7 @@ This project follows **Hexagonal Architecture**, ensuring separation of concerns
 - Uses Ports (Interfaces) to communicate with Infrastructure Layer.
 - Does not depend on technologies like databases, APIs, or UI.
 
-### Domain Layer
+### Infrastructure Layer
 #### Role:
 - Implements Adapters (External Communication).
 - Contains Repositories, API Clients, Message Queue Handlers, Database Access.
