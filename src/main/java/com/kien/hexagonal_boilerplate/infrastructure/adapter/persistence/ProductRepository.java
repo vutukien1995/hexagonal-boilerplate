@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface OrderRepository extends JpaRepository<OrderEntity, String> {
+public interface ProductRepository extends JpaRepository<ProductEntity, String> {
 
-    List<OrderEntity> findByProduct(String product);
+    List<ProductEntity> findByProduct(String product);
 
 }

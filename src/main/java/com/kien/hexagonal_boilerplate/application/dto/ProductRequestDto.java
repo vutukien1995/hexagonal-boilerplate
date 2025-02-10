@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class OrderRequestDto {
+public class ProductRequestDto {
 
     private UUID id;
 
@@ -25,7 +25,7 @@ public class OrderRequestDto {
     private BigDecimal price;
 
     @NotBlank(message = "field.not.blank")
-    @Pattern(regexp = "^(NEW|PROCESSING|COMPLETED|CANCELED)$", message = "order.invalid.status")
+    @Pattern(regexp = "^(NEW|PROCESSING|COMPLETED|CANCELED)$", message = "product.invalid.status")
     private String status;
 
 }

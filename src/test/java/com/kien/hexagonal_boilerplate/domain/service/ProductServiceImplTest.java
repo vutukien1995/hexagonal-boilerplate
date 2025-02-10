@@ -3,10 +3,10 @@ package com.kien.hexagonal_boilerplate.domain.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import com.kien.hexagonal_boilerplate.application.port.out.OrderPersistencePort;
+import com.kien.hexagonal_boilerplate.application.port.out.ProductPersistencePort;
 import com.kien.hexagonal_boilerplate.domain.exception.BadRequestException;
-import com.kien.hexagonal_boilerplate.domain.model.Order;
-import com.kien.hexagonal_boilerplate.infrastructure.adapter.persistence.OrderEntity;
+import com.kien.hexagonal_boilerplate.domain.model.Product;
+import com.kien.hexagonal_boilerplate.infrastructure.adapter.persistence.ProductEntity;
 import com.kien.hexagonal_boilerplate.infrastructure.common.BadResponse;
 import com.kien.hexagonal_boilerplate.infrastructure.common.Response;
 import com.kien.hexagonal_boilerplate.infrastructure.util.MessageUtil;
@@ -23,60 +23,60 @@ import java.util.List;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
-public class OrderServiceImplTest {
+public class ProductServiceImplTest {
 
     @Mock
-    private OrderPersistencePort orderPersistencePort;
+    private ProductPersistencePort productPersistencePort;
 
     @Mock
     private MessageUtil messageUtil;
 
     @InjectMocks
-    private OrderServiceImpl orderService;
+    private ProductServiceImpl orderService;
 
-    private Order sampleOrder;
-    private OrderEntity sampleOrderEntity;
+    private Product sampleProduct;
+    private ProductEntity sampleProductEntity;
 
     @BeforeEach
     void setUp() {
-        sampleOrder = new Order(UUID.randomUUID(), "Product A", 10, BigDecimal.valueOf(100.0), "NEW");
-        sampleOrderEntity = new OrderEntity(UUID.randomUUID(), "Product A", 10, BigDecimal.valueOf(100.0), "NEW");
+        sampleProduct = new Product(UUID.randomUUID(), "Product A", 10, BigDecimal.valueOf(100.0), "NEW");
+        sampleProductEntity = new ProductEntity(UUID.randomUUID(), "Product A", 10, BigDecimal.valueOf(100.0), "NEW");
     }
 
     @Test
     void createOrder_Success() {
-        when(orderPersistencePort.getByProduct(anyString())).thenReturn(List.of());
-        when(orderPersistencePort.save(any(Order.class))).thenReturn(sampleOrderEntity);
+        when(productPersistencePort.getByProduct(anyString())).thenReturn(List.of());
+        when(productPersistencePort.save(any(Product.class))).thenReturn(sampleProductEntity);
 
-        ResponseEntity<?> response = orderService.create(sampleOrder);
+        ResponseEntity<?> response = orderService.create(sampleProduct);
 
         assertEquals(201, response.getStatusCode().value());
-        verify(orderPersistencePort).save(sampleOrder);
+        verify(productPersistencePort).save(sampleProduct);
     }
 
     @Test
     void createOrder_ThrowsException_WhenProductExists() {
-        when(orderPersistencePort.getByProduct(anyString())).thenReturn(List.of(sampleOrder));
+        when(productPersistencePort.getByProduct(anyString())).thenReturn(List.of(sampleProduct));
 
-        assertThrows(BadRequestException.class, () -> orderService.create(sampleOrder));
+        assertThrows(BadRequestException.class, () -> orderService.create(sampleProduct));
     }
 
     @Test
     void getByProduct_Success() {
-        when(orderPersistencePort.getByProduct("Product A")).thenReturn(List.of(sampleOrder));
+        when(productPersistencePort.getByProduct("Product A")).thenReturn(List.of(sampleProduct));
 
         ResponseEntity<?> response = orderService.getByProduct("Product A");
 
         assertEquals(200, response.getStatusCode().value());
-        assertEquals(sampleOrder, response.getBody());
+        assertEquals(sampleProduct, response.getBody());
     }
 
     @Test
     void getByProduct_NotFound() {
-        when(orderPersistencePort.getByProduct("Unknown"))
+        when(productPersistencePort.getByProduct("Unknown"))
                 .thenReturn(List.of());
         when(messageUtil.getBadResponseByMsg("order.product.not.found"))
-                .thenReturn(BadResponse.builder().success(false).message("Order is not found").build());
+                .thenReturn(BadResponse.builder().success(false).message("Product is not found").build());
 
         ResponseEntity<?> response = orderService.getByProduct("Unknown");
 
@@ -85,31 +85,31 @@ public class OrderServiceImplTest {
 
     @Test
     void updateOrder_Success() {
-        when(orderPersistencePort.getByProduct("Product A")).thenReturn(List.of(sampleOrder));
+        when(productPersistencePort.getByProduct("Product A")).thenReturn(List.of(sampleProduct));
         when(messageUtil.getResponseByMsg("order.product.update.success"))
                 .thenReturn(Response.builder().success(true).message("Update success").build());
 
-        ResponseEntity<?> response = orderService.update(sampleOrder);
+        ResponseEntity<?> response = orderService.update(sampleProduct);
 
         assertEquals(200, response.getStatusCode().value());
-        verify(orderPersistencePort).update(sampleOrder);
+        verify(productPersistencePort).update(sampleProduct);
     }
 
     @Test
     void deleteOrder_Success() {
-        when(orderPersistencePort.getByProduct("Product A")).thenReturn(List.of(sampleOrder));
+        when(productPersistencePort.getByProduct("Product A")).thenReturn(List.of(sampleProduct));
         when(messageUtil.getResponseByMsg("order.product.delete.success"))
                 .thenReturn(Response.builder().success(true).message("Delete success").build());
 
         ResponseEntity<?> response = orderService.delete("Product A");
 
         assertEquals(200, response.getStatusCode().value());
-        verify(orderPersistencePort).delete("Product A");
+        verify(productPersistencePort).delete("Product A");
     }
 
     @Test
     void deleteOrder_NotFound() {
-        when(orderPersistencePort.getByProduct("Unknown")).thenReturn(List.of());
+        when(productPersistencePort.getByProduct("Unknown")).thenReturn(List.of());
         when(messageUtil.getBadResponseByMsg("order.product.not.found"))
                 .thenReturn(BadResponse.builder().success(false).message("Not found").build());
 

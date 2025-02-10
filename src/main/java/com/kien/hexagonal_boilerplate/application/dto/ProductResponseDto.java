@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class OrderResponseDto {
+public class ProductResponseDto {
 
 
 

@@ -10,12 +10,12 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "products")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderEntity {
+public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

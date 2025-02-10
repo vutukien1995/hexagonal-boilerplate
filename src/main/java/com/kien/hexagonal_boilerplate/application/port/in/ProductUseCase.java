@@ -1,13 +1,13 @@
 package com.kien.hexagonal_boilerplate.application.port.in;
 
-import com.kien.hexagonal_boilerplate.domain.model.Order;
+import com.kien.hexagonal_boilerplate.domain.model.Product;
 import org.springframework.http.ResponseEntity;
 
-public interface OrderUseCase {
+public interface ProductUseCase {
 
-    ResponseEntity<?> create(Order request);
+    ResponseEntity<?> create(Product request);
     ResponseEntity<?> getByProduct(String product);
-    ResponseEntity<?> update(Order request);
+    ResponseEntity<?> update(Product request);
     ResponseEntity<?> delete(String product);
 
 }
