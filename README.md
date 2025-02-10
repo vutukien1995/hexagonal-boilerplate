@@ -7,6 +7,13 @@ This project follows **Hexagonal Architecture**, ensuring separation of concerns
 
 ## 🚀 Features
 
+### ✅  JPA + H2 Database
+- Uses **Spring Data JPA** for database interactions.
+- **H2 in-memory database** for quick testing.
+
+### ✅  Validation
+- Uses `@Valid` and `@NotNull`, `@Size`, etc., for request validation.
+
 ### ✅  Exception Handling (Global Exception Handler)
 - Implements a centralized exception handling mechanism using `@RestControllerAdvice`.
 - Returns structured error responses for better debugging.
@@ -20,13 +27,6 @@ This project follows **Hexagonal Architecture**, ensuring separation of concerns
   Calling: OrderController.create(..) with args [OrderRequestDto(id=null, product=Soap, quantity=1, price=1000, status=NEW)]
   Completed: OrderController.create(..) in 33 ms, response <201 CREATED Created,Response(success=true, code=null, message=null, data=OrderEntity(id=cdae2115-d845-4308-850d-e4431a0769d6, product=Soap, quantity=1, price=1000, status=NEW)),[]>
   ```
-
-### ✅  JPA + H2 Database
-- Uses **Spring Data JPA** for database interactions.
-- **H2 in-memory database** for quick testing.
-
-### ✅  Validation
-- Uses `@Valid` and `@NotNull`, `@Size`, etc., for request validation.
 
 ### ✅  Swagger (OpenAPI)
 - Generates interactive API documentation.
